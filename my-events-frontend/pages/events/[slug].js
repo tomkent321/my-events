@@ -24,20 +24,59 @@ export default function EventPage({ evt }) {
           </a>
         </div>
 
+        <h1>{evt.name}</h1>
         <div>
-          {evt.day} {evt.date} at {evt.time}
+          <span style={{ fontWeight: 'bold' }}>
+            {evt.day} {evt.date} at {evt.time}
+          </span>
         </div>
         <div>about {evt.totalTime} total</div>
-        <h1>{evt.name}</h1>
         {evt.image && (
           <div className={styles.image}>
-            <Image src={evt.image} width={960} height={600} />
+            <Image src={evt.image} width={700} height={438} />
           </div>
         )}
         <h3>You're invited by:</h3>
         <p>{evt.originator}</p>
         <h3>Info</h3>
         <p>{evt.information}</p>
+
+        {evt.link.length > '' && (
+          <a href={evt.link} target={'_blank'} rel={'noreferrer'}>
+            <span style={{ textDecoration: 'underline' }}>
+              Link to {evt.name}
+            </span>
+          </a>
+        )}
+
+        <p>
+          <span style={{ fontWeight: 'bold' }}>cost: </span>
+          {evt.cost}
+        </p>
+
+        <h3>{evt.venue}</h3>
+        <p>{evt.address}</p>
+        <p>{evt.phone}</p>
+        <p>
+          <span style={{ fontWeight: 'bold' }}>travel arraingements: </span>
+          {evt.travel}
+        </p>
+
+        <h3>Currently Going</h3>
+        {evt.committed.length > 0 ? (
+          <p>
+            {evt.committed.map((name) => (
+              <p style={{ marginLeft: 30 }}>{name}</p>
+            ))}
+          </p>
+        ) : (
+          <p style={{ marginLeft: 30 }}>No one has signed up yet</p>
+        )}
+        <div style={{marginTop: 30}}>
+        <Link href='#'>
+          <a className='btn-secondary'>Add your name</a>
+        </Link>
+        <p>RSVP by: {evt.rsvp}</p></div>
       </div>
     </Layout>
   )

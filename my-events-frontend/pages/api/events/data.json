@@ -22,7 +22,8 @@
       "originator": "Kent",
       "travel": "5 seats in Tom and Pam's car",
       "information": "Colorado premiers of Vladimir Martynov: Come in! Howard Goodall: Requiem; Eternal Light (in memory of the lost lives due to the pandemic) in Collaboration with the Boulder Chorale directed by Vicki Burrichter",
-      "image": "/images/sample/event4.jpg"
+      "image": "/images/sample/event4.jpg",
+      "link": "https://www.boulderchamberorchestra.com/about-the-bco"
     },
     {
       "id": "1",
@@ -35,7 +36,7 @@
       "totalTime": "3 hours",
       "address": "1007 York St, Denver, CO 80206",
       "phone": "(720) 865-3500",
-      "cost": "$12.50 for adults, $9.50 for seniors and $9 for students and children ages 3 to 15. We may stop for dinner on the way home. ",
+      "cost": "$12.50 for adults, $9.50 for seniors and $9 for students and children ages 3 to 15. ",
       "committed": [
         "Kent",
         "Mindy",
@@ -45,8 +46,33 @@
       "rsvp": "April 1, 2022",
       "originator": "Mindy",
       "travel": "6 seats avaiable in Tom and Pam's car",
-      "information": "See hundreds of exotic blooms, including rare orchids from the Garden's collection. ",
-      "image": "/images/sample/event1.jpg"
+      "information": "See hundreds of exotic blooms, including rare orchids from the Garden's collection. We may stop for dinner on the way home.  ",
+      "image": "/images/sample/event1.jpg",
+      "link": "https://www.botanicgardens.org/"
+    },
+    {
+      "id": "5",
+      "name": "Colorado Railroad Museum Tour",
+      "slug": "colorado-railroad-museum-tour",
+      "venue": "Colorado Railroad Museum",
+      "day": "Saturday",
+      "date": "May 1, 2022",
+      "time": "9:30 AM",
+      "totalTime": "2.5 hours",
+      "address": "17155 W. 44th Avenue Golden, CO 80403",
+      "phone": "(303)460-0111",
+      "cost": "$10 adults, $5 ages 2-17, $8 seniors ages 60+",
+      "committed": [
+        "Ryan",
+        "Creed",
+        "Ivan"
+      ],
+      "rsvp": "April 29, 2022",
+      "originator": "Tom",
+      "travel": "7 seats in Tom's car",
+      "information": "Tour railroad rolling stock, see the model railroads in action. Take a lunch and eat at the museum",
+      "image": "/images/sample/event5.jpg",
+      "link": "https://coloradorailroadmuseum.org/?gclid=EAIaIQobChMIuv2TyuiC9gIV9B-tBh1NdgwvEAAYASAAEgISKfD_BwE"
     },
     {
       "id": "3",
@@ -71,8 +97,9 @@
       "rsvp": "May 12, 2022",
       "originator": "Kirstie",
       "travel": "Your own transportation",
-      "information": "Celebrate Ryan's promotion.",
-      "image": "/images/sample/event3.jpg"
+      "information": "Celebrate the end of the school year. Celebrate Creed's graduation from elementary school and Selah's graduation from preschool.Graduation presents would be nice!",
+      "image": "/images/sample/event3.jpg",
+      "link": "https://haciendacolorado.com/locations/westminster/"
     },
     {
       "id": "2",
@@ -86,15 +113,13 @@
       "address": "Rollinsville, CO 80474",
       "phone": "",
       "cost": "none",
-      "committed": [
-        "Tom",
-        "Ryan"
-      ],
+      "committed": [],
       "rsvp": "June 13, 2022",
       "originator": "Tom",
       "travel": "7 seats avaiable in Tom's car",
       "information": "Seven mile hike to Crater Lakes. A little steep but we're in no hurry. Need to pack a lunch, water and mosquito repellent.",
-      "image": "/images/sample/event2.jpg"
+      "image": "/images/sample/event2.jpg",
+      "link": ""
     }
   ]
 }
