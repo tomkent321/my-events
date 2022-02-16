@@ -72,11 +72,16 @@ export default function EventPage({ evt }) {
         ) : (
           <p style={{ marginLeft: 30 }}>No one has signed up yet</p>
         )}
-        <div style={{marginTop: 30}}>
-        <Link href='#'>
-          <a className='btn-secondary'>Add your name</a>
+        <div style={{ marginTop: 30 }}>
+          <Link href='#'>
+            <a className='btn-secondary'>Add your name</a>
+          </Link>
+          <p>RSVP by: {evt.rsvp}</p>
+        </div>
+
+        <Link href='/events'>
+          <a className={styles.back}>{'<'} Go Back</a>
         </Link>
-        <p>RSVP by: {evt.rsvp}</p></div>
       </div>
     </Layout>
   )
