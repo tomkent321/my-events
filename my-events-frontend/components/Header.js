@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import styles from '@/styles/Header.module.css'
 import Search from './Search'
+import { FaPray } from 'react-icons/fa'
 
 export default function Header() {
   return (
@@ -16,6 +17,11 @@ export default function Header() {
           <li>
             <Link href='/events'>
               <a>Invitations</a>
+            </Link>
+          </li>
+          <li>
+            <Link href='events/add'>
+              <a>Add Invitation</a>
             </Link>
           </li>
         </ul>
