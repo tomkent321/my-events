@@ -10,34 +10,6 @@ import { getDisplayName } from 'next/dist/shared/lib/utils'
 export default function EventPage({ evt }) {
   const deleteEvent = (e) => {
     console.log('delete')
-
-    const dow = 'monday'
-    dow = 'Monday'
-    console.log(new Date(evt.date).getDay())
-    // const dayofWeek = ''
-    // switch (dow) {
-    //   case 0:
-    //     day = 'Sunday'
-    //     break
-    //   case 1:
-    //     day = 'Monday'
-    //     break
-    //   case 2:
-    //     day = 'Tuesday'
-    //     break
-    //   case 3:
-    //     day = 'Wednesday'
-    //     break
-    //   case 4:
-    //     day = 'Thursday'
-    //     break
-    //   case 5:
-    //     day = 'Friday'
-    //     break
-    //   case 6:
-    //     day = 'Saturday'
-    //     break
-    // }
   }
 
   return (
@@ -83,9 +55,13 @@ export default function EventPage({ evt }) {
         {evt.image && (
           <div className={styles.image}>
             <Image
-              src={evt.image.formats.medium.url}
-              width={700}
-              height={438}
+              src={
+                Object.entries(evt.image).length === 0
+                  ? '/images/event-default-2.png'
+                  : evt.image.formats.medium.url
+              }
+              width={960}
+              height={600}
             />
           </div>
         )}

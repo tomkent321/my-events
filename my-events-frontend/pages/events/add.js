@@ -32,7 +32,7 @@ export default function AddPage() {
 
   const router = useRouter()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
     const hasEmptyFields = Object.values(values).some(
@@ -43,6 +43,21 @@ export default function AddPage() {
       toast.error('Please be sure all required (*) fields are filled in', {
         autoClose: 2500,
       })
+    }
+
+    const res = await fetch(`${API_URL}/events`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(values),
+    })
+
+    if (!res.ok) {
+      toast.error('Something Went Wrong')
+    } else {
+      const evt = await res.json()
+      router.push(`/events/${evt.slug}`)
     }
   }
   const handleInputChange = (e) => {

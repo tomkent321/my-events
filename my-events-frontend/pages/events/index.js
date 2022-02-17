@@ -12,21 +12,19 @@ export default function EventsPage({ events }) {
       {events.map((evt) => (
         <EventItem key={evt.id} evt={evt} />
       ))}
-     
     </Layout>
   )
 }
 
-
 // render only on the inital open, with 1 sec revalidation
 
 export async function getStaticProps() {
-  const res= await fetch(`${API_URL}/events?_sort=date:ASC`)
+  const res = await fetch(`${API_URL}/events?_sort=date:ASC`)
   const events = await res.json()
 
   return {
-    props: {events},
-    revalidate: 1
+    props: { events },
+    revalidate: 1,
   }
 }
 
