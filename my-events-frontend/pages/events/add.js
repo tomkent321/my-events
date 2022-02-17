@@ -41,25 +41,26 @@ export default function AddPage() {
 
     if (hasEmptyFields) {
       toast.error('Please be sure all required (*) fields are filled in', {
-        autoClose: 2500,
+        autoClose: 4000,
       })
-    }
-
-    const res = await fetch(`${API_URL}/events`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(values),
-    })
-
-    if (!res.ok) {
-      toast.error('Something Went Wrong')
     } else {
-      const evt = await res.json()
-      router.push(`/events/${evt.slug}`)
+      const res = await fetch(`${API_URL}/events`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      })
+
+      if (!res.ok) {
+        toast.error('Something Went Wrong')
+      } else {
+        const evt = await res.json()
+        router.push(`/events/${evt.slug}`)
+      }
     }
   }
+
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setValues({ ...values, [name]: value })
@@ -112,44 +113,14 @@ export default function AddPage() {
             />
           </div>
           <div>
-            <label style={{ color: 'rgb(192,0,0)' }} htmlFor='totalTime'>
-              Duration in hours of the event *
+            <label style={{ color: 'rgb(192,0,0)' }} htmlFor='rsvp'>
+              RSVP Deadline Date *
             </label>
             <input
-              type='text'
-              id='totalTime'
-              name='totalTime'
-              value={values.totalTime}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div>
-            <label htmlFor='image'>Image</label>
-            <input
-              type='text'
-              id='image'
-              name='image'
-              value={values.image}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div>
-            <label htmlFor='link'>Link to Activity Web Site (optional)</label>
-            <input
-              type='text'
-              id='link'
-              name='link'
-              value={values.link}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div>
-            <label htmlFor='cost'>Cost (optional)</label>
-            <input
-              type='text'
-              id='cost'
-              name='cost'
-              value={values.cost}
+              type='date'
+              id='rsvp'
+              name='rsvp'
+              value={values.rsvp}
               onChange={handleInputChange}
             />
           </div>
@@ -177,7 +148,18 @@ export default function AddPage() {
               onChange={handleInputChange}
             />
           </div>
-
+          <div>
+            <label style={{ color: 'rgb(192,0,0)' }} htmlFor='totalTime'>
+              Duration of the event (hours,days,range, etc.) *
+            </label>
+            <input
+              type='text'
+              id='totalTime'
+              name='totalTime'
+              value={values.totalTime}
+              onChange={handleInputChange}
+            />
+          </div>
           <div>
             <label htmlFor='phone'>Venue Phone</label>
             <input
@@ -201,6 +183,37 @@ export default function AddPage() {
               onChange={handleInputChange}
             />
           </div>
+          {/* <div>
+            <label htmlFor='image'>Image</label>
+            <input
+              type='text'
+              id='image'
+              name='image'
+              value={values.image}
+              onChange={handleInputChange}
+            />
+          </div> */}
+          <div>
+            <label htmlFor='link'>Link to Activity Web Site (optional)</label>
+            <input
+              type='text'
+              id='link'
+              name='link'
+              value={values.link}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <label htmlFor='cost'>Cost (optional)</label>
+            <input
+              type='text'
+              id='cost'
+              name='cost'
+              value={values.cost}
+              onChange={handleInputChange}
+            />
+          </div>
+
           <div>
             <label htmlFor='travel'>Travel Resources</label>
             <input
@@ -208,18 +221,6 @@ export default function AddPage() {
               id='travel'
               name='travel'
               value={values.travel}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div>
-            <label style={{ color: 'rgb(192,0,0)' }} htmlFor='rsvp'>
-              RSVP Deadline Date *
-            </label>
-            <input
-              type='date'
-              id='rsvp'
-              name='rsvp'
-              value={values.rsvp}
               onChange={handleInputChange}
             />
           </div>

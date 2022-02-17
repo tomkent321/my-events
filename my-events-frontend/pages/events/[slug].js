@@ -60,8 +60,8 @@ export default function EventPage({ evt }) {
                   ? '/images/event-default-2.png'
                   : evt.image.formats.medium.url
               }
-              width={960}
-              height={600}
+              width={700}
+              height={438}
             />
           </div>
         )}
@@ -69,7 +69,7 @@ export default function EventPage({ evt }) {
         <h3>Info</h3>
         <p style={{ marginLeft: 20 }}>{evt.information}</p>
 
-        {evt.link && (
+        {evt.link !== ' ' && (
           <a
             style={{ marginLeft: 20 }}
             href={evt.link}
@@ -82,7 +82,7 @@ export default function EventPage({ evt }) {
           </a>
         )}
 
-        {evt.cost && (
+        {evt.cost !== ' ' && (
           <p style={{ marginLeft: 20 }}>
             <span style={{ fontWeight: 'bold' }}>cost: </span>
             {evt.cost}
