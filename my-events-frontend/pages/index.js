@@ -12,22 +12,23 @@ export default function HomePage({ events }) {
       {events.map((evt) => (
         <EventItem key={evt.id} evt={evt} />
       ))}
-      {events.length > 0 && ( 
-      <Link href='/events'>
-        <a className='btn-secondary'>See All Invitations</a></Link>)}
+      {events.length > 0 && (
+        <Link href='/events'>
+          <a className='btn-secondary'>See All Invitations</a>
+        </Link>
+      )}
     </Layout>
   )
 }
 
-
 // render only on the inital open, with 1 sec revalidation
 // The parameters in the API are from strapi
 export async function getStaticProps() {
-  const res= await fetch(`${API_URL}/events?_sort=date:ASC&_limit=3`)
+  const res = await fetch(`${API_URL}/events?_sort=date:ASC&_limit=3`)
   const events = await res.json()
   return {
-    props: {events },
-    revalidate: 1
+    props: { events },
+    revalidate: 1,
   }
 }
 

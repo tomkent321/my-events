@@ -7,14 +7,13 @@ import styles from '@/styles/EventItem.module.css'
 // see the file to see the required addition
 
 export default function EventItem({ evt }) {
- 
   return (
     <div className={styles.event}>
       <div className={styles.img}>
         <a href={`/events/${evt.slug}`}>
           <Image
             src={
-              Object.entries(evt.image).length === 0
+              Object.entries(evt.image).length === 0 || evt.image === null
                 ? '/images/event-default-2.png'
                 : evt.image.formats.thumbnail.url
             }
