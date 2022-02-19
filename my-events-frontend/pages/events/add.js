@@ -14,7 +14,7 @@ export default function AddPage() {
   // note extra space in optional fields
   const [values, setValues] = useState({
     address: '',
-    // committed: ' ',
+    committed: ' ',
     cost: ' ',
     date: '',
     image: ' ',

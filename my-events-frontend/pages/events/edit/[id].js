@@ -17,7 +17,7 @@ import ImageUpload from '@/components/ImageUpload'
 export default function EditEventPage({ evt }) {
   const [values, setValues] = useState({
     address: evt.address,
-    committed: evt.commmitted,
+    committed: evt.committed,
     cost: evt.cost,
     date: evt.date,
     image: evt.image,
@@ -80,9 +80,15 @@ export default function EditEventPage({ evt }) {
   const imageUploaded = async (e) => {
     const res = await fetch(`${API_URL}/events/${evt.id}`)
     const data = await res.json()
-    console.log(data)
+
     setImagePreview(data.image.formats.thumbnail.url)
     setShowModal(false)
+  }
+
+  const callModal = () => {
+    // scrollTop()
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    setShowModal(true)
   }
 
   return (
@@ -202,16 +208,7 @@ export default function EditEventPage({ evt }) {
               onChange={handleInputChange}
             />
           </div>
-          {/* <div>
-            <label htmlFor='image'>Image</label>
-            <input
-              type='text'
-              id='image'
-              name='image'
-              value={values.image}
-              onChange={handleInputChange}
-            />
-          </div> */}
+
           <div>
             <label htmlFor='link'>Link to Activity Web Site (optional)</label>
             <input
@@ -244,7 +241,7 @@ export default function EditEventPage({ evt }) {
             />
           </div>
           <div>
-            <label htmlFor='commmitted'>Committed to Go</label>
+            <label htmlFor='committed'>Committed to Go</label>
             <input
               type='text'
               id='committed'
@@ -280,10 +277,7 @@ export default function EditEventPage({ evt }) {
       )}
 
       <div>
-        <button
-          onClick={() => setShowModal(true)}
-          className='btn-secondary btn-icon'
-        >
+        <button onClick={callModal} className='btn-secondary btn-icon'>
           <FaImage /> Set Image
         </button>
       </div>

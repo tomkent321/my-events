@@ -19,7 +19,7 @@ export default function EventsPage({ events }) {
 // render only on the inital open, with 1 sec revalidation
 
 export async function getStaticProps() {
-  const res = await fetch(`${API_URL}/events?_sort=date:ASC`)
+  const res = await fetch(`${API_URL}/events?_sort=rsvp:ASC`)
   const events = await res.json()
 
   return {
@@ -33,9 +33,10 @@ export async function getStaticProps() {
 // export async function getServerSideProps() {
 //   const res = await fetch(`${API_URL}/api/events`)
 //   const events = await res.json()
+//   console.log(events)
 
 //   // make it accessible to the client
 //   return {
-//     props: { events:events.slice(0,3) },
+//     props: { events:events },
 //   }
 // }

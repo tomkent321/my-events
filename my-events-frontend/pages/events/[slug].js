@@ -8,25 +8,29 @@ import { FaPencilAlt, FaTimes } from 'react-icons/fa'
 import { getDisplayName } from 'next/dist/shared/lib/utils'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-
+import { useState } from 'react'
 
 export default function EventPage({ evt }) {
-
   const router = useRouter()
-  
+
+  const [values, setValues] = useState({
+    committed: ' ',
+  })
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setValues({ ...values, [name]: value })
+  }
   const deleteEvent = async (e) => {
-    if(confirm('Are you sure?')){
+    if (confirm('Are you sure?')) {
       const res = await fetch(`${API_URL}/events/${evt.id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
       })
-const data = await res.json()
-if(!res.ok) {
-  toast.error(data.message)
-
-} else {
-  router.push('/events')
-}
-
+      const data = await res.json()
+      if (!res.ok) {
+        toast.error(data.message)
+      } else {
+        router.push('/events')
+      }
     }
   }
 
@@ -73,15 +77,51 @@ if(!res.ok) {
         <div>about {evt.totalTime} total</div>
         {evt.image && (
           <div className={styles.image}>
-            <Image
-              src={
-                Object.entries(evt.image).length === 0
-                  ? '/images/event-default-2.png'
-                  : evt.image.formats.medium.url
+            {(() => {
+              switch (true) {
+                case evt.image !== null &&
+                  evt.image.hasOwnProperty('formats') &&
+                  evt.image.formats.hasOwnProperty('medium'):
+                  return (
+                    <Image
+                      src={evt.image.formats.small.url}
+                      width={700}
+                      height={438}
+                    />
+                  )
+                  break
+                case evt.image !== null &&
+                  evt.image.hasOwnProperty('formats') &&
+                  evt.image.formats.hasOwnProperty('small'):
+                  return (
+                    <Image
+                      src={evt.image.formats.small.url}
+                      width={300}
+                      height={188}
+                    />
+                  )
+                  break
+                case evt.image !== null &&
+                  evt.image.hasOwnProperty('formats') &&
+                  evt.image.formats.hasOwnProperty('thumbnail'):
+                  return (
+                    <Image
+                      src={evt.image.formats.thumbnail.url}
+                      width={300}
+                      height={188}
+                    />
+                  )
+                  break
+                default:
+                  return (
+                    <Image
+                      src={'/images/event-default-2.png'}
+                      width={500}
+                      height={312}
+                    />
+                  )
               }
-              width={700}
-              height={438}
-            />
+            })()}
           </div>
         )}
 
@@ -137,13 +177,31 @@ if(!res.ok) {
           <span style={{ fontWeight: 'bold' }}>Currently Signed Up:</span>{' '}
           {evt.committed}
         </p>
-
+        <div style={{ marginTop: 25 }}>
+          <label
+            className={styles.label}
+            style={{ color: 'rgb(192,0,0)' }}
+            htmlFor='name'
+          >
+            To Sign Up: Add Name(s) separated with a comma
+          </label>
+          <input
+            className={styles.input}
+            type='text'
+            id='committed'
+            name='committed'
+            value={values.committed}
+            onChange={handleInputChange}
+          />
+        </div>
         <div style={{ marginTop: 25 }}>
           <p>
             <Link href='#'>
-              <a className='btn-secondary'>Add your name</a>
+              <a className='btn'>Add your name</a>
             </Link>
-            RSVP by: {new Date(evt.rsvp).toLocaleDateString('en-US')}
+            <span style={{ marginLeft: 20 }}>
+              RSVP by: {new Date(evt.rsvp).toLocaleDateString('en-US')}
+            </span>
           </p>
         </div>
 

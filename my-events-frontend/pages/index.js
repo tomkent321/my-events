@@ -7,7 +7,7 @@ import Link from 'next/link'
 export default function HomePage({ events }) {
   return (
     <Layout>
-      <h1>Latest Invites</h1>
+      <h1>Soonest Invite Events</h1>
       {events.length === 0 && <h3>No Invitations to show</h3>}
       {events.map((evt) => (
         <EventItem key={evt.id} evt={evt} />
@@ -24,7 +24,7 @@ export default function HomePage({ events }) {
 // render only on the inital open, with 1 sec revalidation
 // The parameters in the API are from strapi
 export async function getStaticProps() {
-  const res = await fetch(`${API_URL}/events?_sort=date:ASC&_limit=3`)
+  const res = await fetch(`${API_URL}/events?_sort=rsvp:ASC&_limit=3`)
   const events = await res.json()
   return {
     props: { events },

@@ -11,7 +11,7 @@ export default function EventItem({ evt }) {
     <div className={styles.event}>
       <div className={styles.img}>
         <a href={`/events/${evt.slug}`}>
-          <Image
+          {/* <Image
             src={
               Object.entries(evt.image).length === 0 || evt.image === null
                 ? '/images/event-default-2.png'
@@ -19,7 +19,34 @@ export default function EventItem({ evt }) {
             }
             width={170}
             height={100}
-          />
+          /> */}
+
+          {/* ********************************************************** */}
+          {(() => {
+            switch (true) {
+              case evt.image !== null &&
+                evt.image.hasOwnProperty('formats') &&
+                evt.image.formats.hasOwnProperty('thumbnail'):
+                return (
+                  <Image
+                    src={evt.image.formats.thumbnail.url}
+                    width={170}
+                    height={100}
+                  />
+                )
+                break
+              default:
+                return (
+                  <Image
+                    src={'/images/event-default-2.png'}
+                    width={170}
+                    height={100}
+                  />
+                )
+            }
+          })()}
+
+          {/* ********************************************************** */}
         </a>
       </div>
 
