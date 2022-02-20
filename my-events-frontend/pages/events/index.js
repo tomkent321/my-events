@@ -19,9 +19,19 @@ export default function EventsPage({ events }) {
 // render only on the inital open, with 1 sec revalidation
 
 export async function getStaticProps() {
-  const res = await fetch(`${API_URL}/events?_sort=rsvp:ASC`)
+  const res = await fetch(`${API_URL}/events`)
   const events = await res.json()
 
+//the date sort on the strapi api never worked!
+events.sort(({ date: a }, { date: b }) => {
+  if (a > b) {
+    return 1
+  } else if (a < b) {
+    return -1
+  } else {
+    return 0
+  }
+})
   return {
     props: { events },
     revalidate: 1,

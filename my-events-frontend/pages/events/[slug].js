@@ -13,13 +13,20 @@ import { useState } from 'react'
 export default function EventPage({ evt }) {
   const router = useRouter()
 
-  const [values, setValues] = useState({
-    committed: ' ',
-  })
+  // const [values, setValues] = useState({
+  //   committed: ' ',
+  // })
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target
+  //   setValues({ ...values, [name]: value })
+  // }
+
+  const [committed, setCommitted] = useState('')
   const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setValues({ ...values, [name]: value })
+    //const { name, value } = e.target
+    setCommitted({ committed: e.target.value })
   }
+
   const deleteEvent = async (e) => {
     if (confirm('Are you sure?')) {
       const res = await fetch(`${API_URL}/events/${evt.id}`, {
@@ -31,6 +38,28 @@ export default function EventPage({ evt }) {
       } else {
         router.push('/events')
       }
+    }
+  }
+
+  //To add to committed field.  To delete the original use must delete from
+  // the edit page
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    const res = await fetch(`${API_URL}/events/${evt.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(values),
+    })
+
+    if (!res.ok) {
+      toast.error('Something Went Wrong')
+    } else {
+      const evt = await res.json()
+      router.push(`/events/${evt.slug}`)
     }
   }
 
@@ -84,7 +113,7 @@ export default function EventPage({ evt }) {
                   evt.image.formats.hasOwnProperty('medium'):
                   return (
                     <Image
-                      src={evt.image.formats.small.url}
+                      src={evt.image.formats.medium.url}
                       width={700}
                       height={438}
                     />
@@ -107,8 +136,8 @@ export default function EventPage({ evt }) {
                   return (
                     <Image
                       src={evt.image.formats.thumbnail.url}
-                      width={300}
-                      height={188}
+                      width={170}
+                      height={100}
                     />
                   )
                   break
@@ -190,8 +219,9 @@ export default function EventPage({ evt }) {
             type='text'
             id='committed'
             name='committed'
-            value={values.committed}
-            onChange={handleInputChange}
+            // value={values.committed}
+            value={committed}
+            onChange={(e) => setCommitted(e.target.value)}
           />
         </div>
         <div style={{ marginTop: 25 }}>

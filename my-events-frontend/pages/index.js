@@ -24,22 +24,27 @@ export default function HomePage({ events }) {
 // render only on the inital open, with 1 sec revalidation
 // The parameters in the API are from strapi
 export async function getStaticProps() {
-  const res = await fetch(`${API_URL}/events?_sort=rsvp:ASC&_limit=3`)
+  // const res = await fetch(`${API_URL}/events?_limit=3`)
+  const res = await fetch(`${API_URL}/events`)
   const events = await res.json()
+
+  //the date sort on the strapi api never worked!
+  //and if you use the limit filter on the strapi api here
+  //it pulls 3 events out of the middle of the sorted array
+  //so at least for dates, manually sort them and then slice
+  //out the first 3 in the return
+  events.sort(({ date: a }, { date: b }) => {
+    if (a > b) {
+      return 1
+    } else if (a < b) {
+      return -1
+    } else {
+      return 0
+    }
+  })
+
   return {
-    props: { events },
+    props: { events: events.slice(0, 3) },
     revalidate: 1,
   }
 }
-
-// this gets the events data from the server, returns props to client
-
-// export async function getServerSideProps() {
-//   const res = await fetch(`${API_URL}/api/events`)
-//   const events = await res.json()
-
-//   // make it accessible to the client
-//   return {
-//     props: { events:events.slice(0,3) },
-//   }
-// }
