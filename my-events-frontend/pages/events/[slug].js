@@ -9,23 +9,12 @@ import { getDisplayName } from 'next/dist/shared/lib/utils'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useState } from 'react'
+import Router from 'next/router'
+// import Date from '@/components/Date'
 
 export default function EventPage({ evt }) {
   const router = useRouter()
-
-  // const [values, setValues] = useState({
-  //   committed: ' ',
-  // })
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target
-  //   setValues({ ...values, [name]: value })
-  // }
-
-  const [committed, setCommitted] = useState('')
-  const handleInputChange = (e) => {
-    //const { name, value } = e.target
-    setCommitted({ committed: e.target.value })
-  }
+  console.log('first in evt: ', evt)
 
   const deleteEvent = async (e) => {
     if (confirm('Are you sure?')) {
@@ -41,25 +30,45 @@ export default function EventPage({ evt }) {
     }
   }
 
-  //To add to committed field.  To delete the original use must delete from
-  // the edit page
+  const names = evt.Going
+
+  const goingNames = () =>
+    names.map((n) => (
+      <p key={n.Name} style={{ marginLeft: 20 }}>
+        {n.Name}
+      </p>
+    ))
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-
-    const res = await fetch(`${API_URL}/events/${evt.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
+    const nameToAdd = {
+      Name: e.target.name.value,
+      event: {
+        id: evt.id,
       },
-      body: JSON.stringify(values),
-    })
-
-    if (!res.ok) {
-      toast.error('Something Went Wrong')
+    }
+    const toastDelay = 3000
+    console.log(nameToAdd)
+    if (nameToAdd.name === null || nameToAdd.name === '') {
+      toast.error('Please enter a Name', {
+        autoClose: toastDelay,
+      })
     } else {
-      const evt = await res.json()
-      router.push(`/events/${evt.slug}`)
+      const res = await fetch(`${API_URL}/Attendees`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(nameToAdd),
+      })
+
+      if (!res.ok) {
+        toast.error('Something Went Wrong')
+      } else {
+        const evt = await res.json()
+        // router.push(`/events/${evt.slug}`)
+      }
+      Router.reload(window.location.pathname)
     }
   }
 
@@ -153,87 +162,82 @@ export default function EventPage({ evt }) {
             })()}
           </div>
         )}
+        <div className={styles.boxed}>
+          <h3>Info</h3>
+          <p style={{ marginLeft: 20 }}>{evt.information}</p>
 
-        <h3>Info</h3>
-        <p style={{ marginLeft: 20 }}>{evt.information}</p>
+          {evt.link !== ' ' && (
+            <a
+              style={{ marginLeft: 20 }}
+              href={evt.link}
+              target={'_blank'}
+              rel={'noreferrer'}
+            >
+              <span style={{ textDecoration: 'underline' }}>
+                Link to {evt.name}
+              </span>
+            </a>
+          )}
 
-        {evt.link !== ' ' && (
-          <a
-            style={{ marginLeft: 20 }}
-            href={evt.link}
-            target={'_blank'}
-            rel={'noreferrer'}
+          {evt.cost !== ' ' && (
+            <p style={{ marginLeft: 20 }}>
+              <span style={{ fontWeight: 'bold' }}>cost: </span>
+              {evt.cost}
+            </p>
+          )}
+
+          <h3>{evt.venue}</h3>
+          <div style={{ marginLeft: 20 }}>
+            <p>{evt.address}</p>
+            <p>{evt.phone}</p>
+          </div>
+
+          <div
+            style={{
+              marginTop: 70,
+              width: '75%',
+              // marginLeft: 'auto',
+              marginRight: 'auto',
+            }}
           >
-            <span style={{ textDecoration: 'underline' }}>
-              Link to {evt.name}
-            </span>
-          </a>
-        )}
-
-        {evt.cost !== ' ' && (
-          <p style={{ marginLeft: 20 }}>
-            <span style={{ fontWeight: 'bold' }}>cost: </span>
-            {evt.cost}
-          </p>
-        )}
-
-        <h3>{evt.venue}</h3>
-        <div style={{ marginLeft: 20 }}>
-          <p>{evt.address}</p>
-          <p>{evt.phone}</p>
+            {/* <hr></hr> */}
+          </div>
         </div>
+        <div className={styles.boxed}>
+          <div>
+            <p>
+              <span style={{ fontWeight: 'bold' }}>You're invited by: </span>
+              {evt.originator}
+            </p>
+          </div>
+          <div>
+            <p>
+              <span style={{ fontWeight: 'bold' }}>Travel arraingements: </span>
+              {evt.travel}
+            </p>
+          </div>
 
-        <div
-          style={{
-            marginTop: 70,
-            width: '75%',
-            // marginLeft: 'auto',
-            marginRight: 'auto',
-          }}
-        >
-          <hr></hr>
+          <div>
+            <p>
+              <span style={{ fontWeight: 'bold' }}>Currently Signed Up:</span>{' '}
+              {/* {evt.committed} */}
+              {
+                // <p>{evt.Going.length > 0 && <p>{evt.Going[1].Name}</p>}</p>
+                (() => goingNames())()
+              }
+            </p>
+          </div>
         </div>
-        <p>
-          <span style={{ fontWeight: 'bold' }}>You're invited by: </span>
-          {evt.originator}
-        </p>
-        <p>
-          <span style={{ fontWeight: 'bold' }}>Travel arraingements: </span>
-          {evt.travel}
-        </p>
-
-        <p>
-          <span style={{ fontWeight: 'bold' }}>Currently Signed Up:</span>{' '}
-          {evt.committed}
-        </p>
-        <div style={{ marginTop: 25 }}>
-          <label
-            className={styles.label}
-            style={{ color: 'rgb(192,0,0)' }}
-            htmlFor='name'
-          >
-            To Sign Up: Add Name(s) separated with a comma
-          </label>
-          <input
-            className={styles.input}
-            type='text'
-            id='committed'
-            name='committed'
-            // value={values.committed}
-            value={committed}
-            onChange={(e) => setCommitted(e.target.value)}
-          />
-        </div>
-        <div style={{ marginTop: 25 }}>
-          <p>
-            <Link href='#'>
-              <a className='btn'>Add your name</a>
-            </Link>
-            <span style={{ marginLeft: 20 }}>
-              RSVP by: {new Date(evt.rsvp).toLocaleDateString('en-US')}
-            </span>
-          </p>
-        </div>
+        <div style={{ marginTop: 25 }}></div>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label className={styles.label} htmlFor='name'>
+              Add your name to sign up
+            </label>
+            <input className={styles.input} type='text' id='name' name='name' />
+          </div>
+          <input type='submit' value='Sign Up!' className='btn' />
+        </form>
 
         <Link href='/events'>
           <a className={styles.back}>{'<'} Go Back</a>

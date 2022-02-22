@@ -40,3 +40,28 @@
     height: 40px;
     padding: 5px;
   } 
+
+  .boxed {
+    /* display: flex;
+    justify-content: space-between;
+    align-items: center; */
+    margin: 20px 0;
+    margin-bottom: 40px;
+    padding: 13px;
+    box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.1);
+  }
+  .btn {
+    display: inline-block;
+    background: rgb(192, 0, 0);
+    color: #fff;
+    padding: 10px 20px;
+    padding: 3px 12px;
+  
+    cursor: pointer;
+    border: 0;
+    border-radius: 5px;
+  }
+  
+  .btn:hover {
+    opacity: 0.9;
+  }

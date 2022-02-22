@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "attendees",
+  "info": {
+    "name": "Attendee",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "event": {
+      "via": "Going",
+      "model": "events"
+    }
+  }
+}

@@ -29,7 +29,7 @@
       "type": "string"
     },
     "date": {
-      "type": "date"
+      "type": "datetime"
     },
     "time": {
       "type": "string"
@@ -75,6 +75,10 @@
     },
     "committed": {
       "type": "string"
+    },
+    "Going": {
+      "collection": "attendee",
+      "via": "event"
     }
   }
 }

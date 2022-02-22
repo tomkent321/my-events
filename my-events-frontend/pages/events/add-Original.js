@@ -2,7 +2,6 @@ import Layout from '@/components/Layout'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import Image from 'next/image'
 import { API_URL } from '@/config/index'
 import styles from '@/styles/Form.module.css'
 import PhoneInput from 'react-phone-input-2'
@@ -10,36 +9,26 @@ import 'react-phone-input-2/lib/style.css'
 import { FaPhoneAlt } from 'react-icons/fa'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { FaImage } from 'react-icons/fa'
-import Modal from '@/components/Modal'
-import ImageUpload from '@/components/ImageUpload'
 
-export default function EditEventPage({ evt }) {
+export default function AddPage() {
+  // note extra space in optional fields
   const [values, setValues] = useState({
-    address: evt.address,
-    committed: evt.committed,
-    cost: evt.cost,
-    date: evt.date,
-    image: evt.image,
-    information: evt.information,
-    link: evt.link,
-    name: evt.name,
-    originator: evt.originator,
-    phone: evt.phone,
-    rsvp: evt.rsvp,
-    time: evt.time,
-    totalTime: evt.totalTime,
-    travel: evt.travel,
-    venue: evt.venue,
+    address: '',
+    committed: ' ',
+    cost: ' ',
+    date: '',
+    image: ' ',
+    information: '',
+    link: ' ',
+    name: '',
+    originator: '',
+    phone: ' ',
+    rsvp: '',
+    time: '',
+    totalTime: '',
+    travel: ' ',
+    venue: '',
   })
-
-  const [imagePreview, setImagePreview] = useState(
-    evt.image === null || Object.entries(evt.image).length === 0
-      ? null
-      : evt.image.formats.thumbnail.url
-  )
-
-  const [showModal, setShowModal] = useState(false)
 
   const router = useRouter()
 
@@ -50,13 +39,14 @@ export default function EditEventPage({ evt }) {
       (element) => element === ''
     )
 
+
+
     if (hasEmptyFields) {
-      toast.error('Please be sure all required (*) fields are filled in', {
-        autoClose: 4000,
-      })
-    } else {
-      const res = await fetch(`${API_URL}/events/${evt.id}`, {
-        method: 'PUT',
+      toast.error('Please fill in all fields')
+    }
+
+      const res = await fetch(`${API_URL}/events`, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -69,7 +59,7 @@ export default function EditEventPage({ evt }) {
         const evt = await res.json()
         router.push(`/events/${evt.slug}`)
       }
-    }
+    
   }
 
   const handleInputChange = (e) => {
@@ -77,24 +67,10 @@ export default function EditEventPage({ evt }) {
     setValues({ ...values, [name]: value })
   }
 
-  const imageUploaded = async (e) => {
-    const res = await fetch(`${API_URL}/events/${evt.id}`)
-    const data = await res.json()
-
-    setImagePreview(data.image.formats.thumbnail.url)
-    setShowModal(false)
-  }
-
-  const callModal = () => {
-    // scrollTop()
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-    setShowModal(true)
-  }
-
   return (
-    <Layout title='Edit Invitation'>
+    <Layout title='Add New Invitation'>
       <Link href='/events'>Go Back</Link>
-      <h1>Edit an Invitation</h1>
+      <h1>Create an Invitation</h1>
       <h6 style={{ marginBottom: '20px', color: 'rgb(192,0,0)' }}>
         fields with (*) are required
       </h6>
@@ -208,7 +184,16 @@ export default function EditEventPage({ evt }) {
               onChange={handleInputChange}
             />
           </div>
-
+          {/* <div>
+            <label htmlFor='image'>Image</label>
+            <input
+              type='text'
+              id='image'
+              name='image'
+              value={values.image}
+              onChange={handleInputChange}
+            />
+          </div> */}
           <div>
             <label htmlFor='link'>Link to Activity Web Site (optional)</label>
             <input
@@ -240,16 +225,6 @@ export default function EditEventPage({ evt }) {
               onChange={handleInputChange}
             />
           </div>
-          <div>
-            <label htmlFor='committed'>Committed to Go</label>
-            <input
-              type='text'
-              id='committed'
-              name='committed'
-              value={values.committed}
-              onChange={handleInputChange}
-            />
-          </div>
         </div>
 
         <div>
@@ -264,39 +239,8 @@ export default function EditEventPage({ evt }) {
             onChange={handleInputChange}
           ></textarea>
         </div>
-        <input type='submit' value='Update Invitation' className='btn' />
+        <input type='submit' value='Add Invitation' className='btn' />
       </form>
-
-      <h2>Invitation Image</h2>
-      {imagePreview ? (
-        <Image src={imagePreview} height={100} width={170} />
-      ) : (
-        <div>
-          <p>No image uploaded</p>
-        </div>
-      )}
-
-      <div>
-        <button onClick={callModal} className='btn-secondary btn-icon'>
-          <FaImage /> Set Image
-        </button>
-      </div>
-
-      <Modal show={showModal} onClose={() => setShowModal(false)}>
-        <ImageUpload evtId={evt.id} imageUploaded={imageUploaded} />
-      </Modal>
     </Layout>
   )
-}
-//
-
-export async function getServerSideProps({ params: { id } }) {
-  const res = await fetch(`${API_URL}/events/${id}`)
-  const evt = await res.json()
-
-  return {
-    props: {
-      evt,
-    },
-  }
 }

@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image' // a customer image tag
 import styles from '@/styles/EventItem.module.css'
-
+// import Date from './date'
 // note to add pictures coming from cloudinary, you must update
 // the next.config.js file to include the cloudinary image call
 // see the file to see the required addition
@@ -11,17 +11,7 @@ export default function EventItem({ evt }) {
     <div className={styles.event}>
       <div className={styles.img}>
         <a href={`/events/${evt.slug}`}>
-          {/* <Image
-            src={
-              Object.entries(evt.image).length === 0 || evt.image === null
-                ? '/images/event-default-2.png'
-                : evt.image.formats.thumbnail.url
-            }
-            width={170}
-            height={100}
-          /> */}
-
-          {/* ********************************************************** */}
+         
           {(() => {
             switch (true) {
               case evt.image !== null &&
@@ -46,12 +36,12 @@ export default function EventItem({ evt }) {
             }
           })()}
 
-          {/* ********************************************************** */}
         </a>
       </div>
 
       <div className={styles.info}>
         <span>
+        {/* <Date dateString={new Date(evt.Date).toLocaleDateString('en-US')} /> */}
           {new Date(evt.date).toLocaleDateString('en-US')} at {evt.time}
           {<span>&nbsp;&nbsp;</span>}
           {(() => {

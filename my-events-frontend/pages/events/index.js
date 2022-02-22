@@ -38,15 +38,4 @@ events.sort(({ date: a }, { date: b }) => {
   }
 }
 
-// this gets the events data from the server, returns props to client
 
-// export async function getServerSideProps() {
-//   const res = await fetch(`${API_URL}/api/events`)
-//   const events = await res.json()
-//   console.log(events)
-
-//   // make it accessible to the client
-//   return {
-//     props: { events:events },
-//   }
-// }
