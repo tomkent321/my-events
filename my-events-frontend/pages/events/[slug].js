@@ -14,7 +14,6 @@ import Router from 'next/router'
 
 export default function EventPage({ evt }) {
   const router = useRouter()
-  console.log('first in evt: ', evt)
 
   const deleteEvent = async (e) => {
     if (confirm('Are you sure?')) {
@@ -48,7 +47,6 @@ export default function EventPage({ evt }) {
       },
     }
     const toastDelay = 3000
-    console.log(nameToAdd)
     if (nameToAdd.name === null || nameToAdd.name === '') {
       toast.error('Please enter a Name', {
         autoClose: toastDelay,
@@ -112,7 +110,9 @@ export default function EventPage({ evt }) {
             })()}
           </span>
         </div>
-        <div>about {evt.totalTime} total</div>
+        <div style={{ marginBottom: 20, marginLeft: 20 }}>
+          about {evt.totalTime} total
+        </div>
         {evt.image && (
           <div className={styles.image}>
             {(() => {
@@ -220,11 +220,8 @@ export default function EventPage({ evt }) {
           <div>
             <p>
               <span style={{ fontWeight: 'bold' }}>Currently Signed Up:</span>{' '}
-              {/* {evt.committed} */}
-              {
-                // <p>{evt.Going.length > 0 && <p>{evt.Going[1].Name}</p>}</p>
-                (() => goingNames())()
-              }
+              <div style={{ columns: '50px 3' }}>{(() => goingNames())()}</div>
+              {/* {(() => goingNames())()} */}
             </p>
           </div>
         </div>
@@ -236,7 +233,10 @@ export default function EventPage({ evt }) {
             </label>
             <input className={styles.input} type='text' id='name' name='name' />
           </div>
-          <input type='submit' value='Sign Up!' className='btn' />
+          <div style={{ marginTop: 15, height: 50 }}>
+            {' '}
+            <input type='submit' value='Sign Up!' className='btn' />
+          </div>
         </form>
 
         <Link href='/events'>

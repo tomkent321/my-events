@@ -2,9 +2,12 @@ import Layout from '@/components/Layout.js'
 import EventItem from '@/components/EventItem.js'
 import { API_URL } from '@/config/index'
 import Link from 'next/link'
+const PER_PAGE = 2
 
 // the events come from data on the server returned by getServerSideProps
-export default function EventsPage({ events }) {
+export default function EventsPage({ events, page, total }) {
+  // console.log('page: ',page)
+  const lastPage = Math.ceil(total / PER_PAGE)
   return (
     <Layout>
       <h1>You're Invited!</h1>
@@ -12,30 +15,51 @@ export default function EventsPage({ events }) {
       {events.map((evt) => (
         <EventItem key={evt.id} evt={evt} />
       ))}
+      {page > 1 && (
+        <Link href={`/events?page=${page - 1}`}>
+          <a className='btn-secondary'>Prev</a>
+        </Link>
+      )}
+      {page < lastPage && (
+        <Link href={`/events?page=${page + 1}`}>
+          <a className='btn-secondary'>Next</a>
+        </Link>
+      )}
     </Layout>
   )
 }
 
 // render only on the inital open, with 1 sec revalidation
 
-export async function getStaticProps() {
-  const res = await fetch(`${API_URL}/events`)
-  const events = await res.json()
+export async function getServerSideProps({ query: { page = 1 } }) {
+  // console.log('page: ', page)
+  // Calculate start page
+  const start = +page === 1 ? 0 : (+page - 1) * PER_PAGE
 
-//the date sort on the strapi api never worked!
-events.sort(({ date: a }, { date: b }) => {
-  if (a > b) {
-    return 1
-  } else if (a < b) {
-    return -1
-  } else {
-    return 0
-  }
-})
+  // Fetch total number of pages
+  const totalRes = await fetch(`${API_URL}/events/count`)
+  const total = await totalRes.json()
+
+  // console.log('total: ', total)
+  // Fetch the events
+
+  const eventRes = await fetch(
+    `${API_URL}/events?_sort=date:ASC&_limit=${PER_PAGE}&_start=${start}`
+  )
+  const events = await eventRes.json()
+
+  // console.log('events: ', events)
+  // //the date sort on the strapi api never worked!
+  // events.sort(({ date: a }, { date: b }) => {
+  //   if (a > b) {
+  //     return 1
+  //   } else if (a < b) {
+  //     return -1
+  //   } else {
+  //     return 0
+  //   }
+  // })
   return {
-    props: { events },
-    revalidate: 1,
+    props: { events, page: +page, total },
   }
 }
-
-
