@@ -6,6 +6,7 @@
             "@/config/*": ["config/*"],
             "@/context/*": ["context/*"],
             "@/styles/*": ["styles/*"],
+            "@/pages/account/*": ["account/*"],
         }
     }
 }

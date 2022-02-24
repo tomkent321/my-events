@@ -1,14 +1,14 @@
-import Layout from '@/components/Layout'
-import { useState } from 'react'
-import { useRouter } from 'next/router'
-import Link from 'next/link'
-import { API_URL } from '@/config/index'
-import styles from '@/styles/Form.module.css'
-import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
+import 'react-toastify/dist/ReactToastify.css'
+import { API_URL } from '@/config/index'
 import { FaPhoneAlt } from 'react-icons/fa'
 import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
+import Layout from '@/components/Layout'
+import Link from 'next/link'
+import PhoneInput from 'react-phone-input-2'
+import styles from '@/styles/Form.module.css'
 
 export default function AddPage() {
   // note extra space in optional fields
