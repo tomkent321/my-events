@@ -1,8 +1,7 @@
 import Layout from '@/components/Layout.js'
 import EventItem from '@/components/EventItem.js'
-import { API_URL } from '@/config/index'
-import Link from 'next/link'
-const PER_PAGE = 2
+import { API_URL, PER_PAGE } from '@/config/index'
+import Pagination from '@/components/Pagination'
 
 // the events come from data on the server returned by getServerSideProps
 export default function EventsPage({ events, page, total }) {
@@ -15,16 +14,16 @@ export default function EventsPage({ events, page, total }) {
       {events.map((evt) => (
         <EventItem key={evt.id} evt={evt} />
       ))}
-      {page > 1 && (
+      {/* {page > 1 && (
         <Link href={`/events?page=${page - 1}`}>
           <a className='btn-secondary'>Prev</a>
         </Link>
       )}
       {page < lastPage && (
         <Link href={`/events?page=${page + 1}`}>
-          <a className='btn-secondary'>Next</a>
         </Link>
-      )}
+      )} */}
+      <Pagination page={page} total={total} />
     </Layout>
   )
 }
