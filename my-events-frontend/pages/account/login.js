@@ -1,9 +1,9 @@
+import 'react-toastify/dist/ReactToastify.css'
 import { FaUser } from 'react-icons/fa'
 import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
 import { useState, useEffect, useConext } from 'react'
-import Link from 'next/link'
 import Layout from '@/components/Layout'
+import Link from 'next/link'
 import styles from '@/styles/AuthForm.module.css'
 
 export default function LoginPage() {
@@ -11,6 +11,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const handleSubmit = (e) => {
     e.preventDefault()
+    console.log({ email, password })
   }
 
   return (
@@ -20,7 +21,7 @@ export default function LoginPage() {
           <FaUser /> Log In
         </h1>
         <ToastContainer />
-        <form action={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor='email'>Email Address</label>
             <input
@@ -43,7 +44,7 @@ export default function LoginPage() {
         </form>
         <p>
           Don't have an account?
-          <Link href='account/register'>
+          <Link href='/account/register'>
             <a> Register</a>
           </Link>
         </p>

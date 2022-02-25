@@ -1,5 +1,5 @@
 // import { FaPray } from 'react-icons/fa'
-import {FaSignInAlt, FaSignOutAlt} from 'react-icons/fa'
+import { FaSignInAlt, FaSignOutAlt } from 'react-icons/fa'
 import Link from 'next/link'
 import LoginPage from '../pages/account/login'
 import RegisterPage from '../pages/account/register'
@@ -22,20 +22,22 @@ export default function Header() {
               <a>Invitations</a>
             </Link>
           </li>
-          
+
           <li>
-            <Link href='events/add'>
+            <Link href='/events/add'>
               <a>Add Invitation</a>
             </Link>
           </li>
           <li>
-            <Link href='account/register'>
+            <Link href='/account/register'>
               <a>Register</a>
             </Link>
           </li>
           <li>
-            <Link href='account/login'>
-              <a className='btn-secondary btn-icon'><FaSignInAlt />Login</a>
+            <Link href='/account/login'>
+              <a className='btn-secondary btn-icon'>
+                <FaSignInAlt /> Login
+              </a>
             </Link>
           </li>
         </ul>
