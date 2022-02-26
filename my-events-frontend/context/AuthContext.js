@@ -14,9 +14,10 @@ export const AuthProvider = ({ children }) => {
   }
 
   // Login user
-  const login = async ({ email: identifier, password }) => {
-    console.log({ identifier, password })
+  const login = async ({ email: identifier, password }) => {(
+    console.log({ identifier, password }))
   }
+
 
   // Log out user
   const logout = async () => {
@@ -29,9 +30,9 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-      <AuthContext.Provider value={{user, error, register, logout}}>
-          {children}
-      </AuthContext.Provider>
+    <AuthContext.Provider value={{ user, error, register, login, logout }}>
+      {children}
+    </AuthContext.Provider>
   )
 }
 
