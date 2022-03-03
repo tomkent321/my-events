@@ -2,8 +2,8 @@
 import { FaSignInAlt, FaSignOutAlt } from 'react-icons/fa'
 import { useContext } from 'react'
 import Link from 'next/link'
-import LoginPage from '../pages/account/login'
-import RegisterPage from '../pages/account/register'
+// import LoginPage from '../pages/account/login'
+// import RegisterPage from '../pages/account/register'
 import Search from './Search'
 import styles from '@/styles/Header.module.css'
 import AuthContext from '@/context/AuthContext'
@@ -27,11 +27,15 @@ export default function Header() {
           </li>
           {user ? (
             // if logged in
-
             <>
               <li>
                 <Link href='/events/add'>
                   <a>Add Invitation</a>
+                </Link>
+              </li>
+              <li>
+                <Link href='/account/dashboard'>
+                  <a>Dashboard</a>
                 </Link>
               </li>
               <li>

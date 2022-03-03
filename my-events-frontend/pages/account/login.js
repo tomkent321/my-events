@@ -47,7 +47,7 @@ export default function LoginPage() {
             />
           </div>
           
-          <input type='submit' value='Login' className='btn' />
+          <input type="submit" value="Login" className='btn' />
         </form>
         <p>
           Don't have an account?
