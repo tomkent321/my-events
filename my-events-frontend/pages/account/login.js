@@ -13,7 +13,7 @@ export default function LoginPage() {
 
   const { login, error } = useContext(AuthContext)
 
-
+  useEffect(() => error && toast.error(error))
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -46,8 +46,8 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          
-          <input type="submit" value="Login" className='btn' />
+
+          <input type='submit' value='Login' className='btn' />
         </form>
         <p>
           Don't have an account?

@@ -4,16 +4,17 @@ import cookie from 'cookie'
 //This is the middle man between the front end and strapi
 export default async (req, res) => {
   if (req.method === 'POST') {
-    const { identifier, password } = req.body
+    const { username, email, password } = req.body
 
     // this is the result of the req:
-    const strapiRes = await fetch(`${API_URL}/auth/local`, {
+    const strapiRes = await fetch(`${API_URL}/auth/local/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        identifier,
+        username,
+        email,
         password,
       }),
     })
