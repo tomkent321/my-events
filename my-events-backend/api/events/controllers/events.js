@@ -7,6 +7,7 @@ const { sanitizeEntity } = require("strapi-utils");
  */
 
 module.exports = {
+    // Get logged in user
   async me(ctx) {
     const user = ctx.state.user;
     if (!user) {
