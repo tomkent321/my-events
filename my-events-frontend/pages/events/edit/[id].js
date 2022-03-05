@@ -13,8 +13,9 @@ import Link from 'next/link'
 import Modal from '@/components/Modal'
 import PhoneInput from 'react-phone-input-2'
 import styles from '@/styles/Form.module.css'
+import { parseCookies } from '@/helpers/index'
 
-export default function EditEventPage({ evt }) {
+export default function EditEventPage({ evt, token }) {
   const [values, setValues] = useState({
     address: evt.address,
     committed: evt.committed,
@@ -59,11 +60,16 @@ export default function EditEventPage({ evt }) {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(values),
       })
 
       if (!res.ok) {
+        if (res.status === 403 || res.status === 401) {
+          toast.error('Unauthorized')
+          return
+        }
         toast.error('Something Went Wrong')
       } else {
         const evt = await res.json()
@@ -291,6 +297,8 @@ export default function EditEventPage({ evt }) {
 //
 
 export async function getServerSideProps({ params: { id }, req }) {
+  const { token } = parseCookies(req)
+
   const res = await fetch(`${API_URL}/events/${id}`)
   const evt = await res.json()
 
@@ -299,6 +307,7 @@ export async function getServerSideProps({ params: { id }, req }) {
   return {
     props: {
       evt,
+      token,
     },
   }
 }

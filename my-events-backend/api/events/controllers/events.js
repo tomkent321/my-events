@@ -7,7 +7,65 @@ const { sanitizeEntity } = require("strapi-utils");
  */
 
 module.exports = {
-    // Get logged in user
+  //delete Invitation with linked user
+  async delete(ctx) {
+    const { id } = ctx.params;
+
+    const [events] = await strapi.services.events.find({
+      id: ctx.params.id,
+      "user.id": ctx.state.user.id,
+    });
+
+    if (!events) {
+      return ctx.unauthorized(`You can't update this entry`);
+    }
+
+    const entity = await strapi.services.events.delete({ id });
+    return sanitizeEntity(entity, { model: strapi.models.events });
+  },
+
+  //Update Invitation with linked user
+  async update(ctx) {
+    const { id } = ctx.params;
+
+    let entity;
+
+    const [events] = await strapi.services.events.find({
+      id: ctx.params.id,
+      "user.id": ctx.state.user.id,
+    });
+
+    if (!events) {
+      return ctx.unauthorized(`You can't update this entry`);
+    }
+
+    if (ctx.is("multipart")) {
+      const { data, files } = parseMultipartData(ctx);
+      entity = await strapi.services.events.update({ id }, data, {
+        files,
+      });
+    } else {
+      entity = await strapi.services.events.update({ id }, ctx.request.body);
+    }
+
+    return sanitizeEntity(entity, { model: strapi.models.events });
+  },
+
+  // Create Invitation with linked user
+  async create(ctx) {
+    let entity;
+    if (ctx.is("multipart")) {
+      const { data, files } = parseMultipartData(ctx);
+      data.user = ctx.state.user.id;
+      entity = await strapi.services.events.create(data, { files });
+    } else {
+      ctx.request.body.user = ctx.state.user.id;
+      entity = await strapi.services.events.create(ctx.request.body);
+    }
+    return sanitizeEntity(entity, { model: strapi.models.events });
+  },
+
+  // Get logged in user
   async me(ctx) {
     const user = ctx.state.user;
     if (!user) {

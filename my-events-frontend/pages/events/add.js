@@ -9,8 +9,9 @@ import Layout from '@/components/Layout'
 import Link from 'next/link'
 import PhoneInput from 'react-phone-input-2'
 import styles from '@/styles/Form.module.css'
+import { parseCookies } from '@/helpers/index'
 
-export default function AddPage() {
+export default function AddEventPage({ token }) {
   // note extra space in optional fields
   // const [values, setValues] = useState({
   //   address: '',
@@ -98,11 +99,16 @@ export default function AddPage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(values),
       })
 
       if (!res.ok) {
+        if (res.status === 403 || res.status === 401) {
+          toast.error('No token found')
+          return
+        }
         toast.error('Something Went Wrong')
       } else {
         const evt = await res.json()
@@ -208,4 +214,14 @@ export default function AddPage() {
       </form>
     </Layout>
   )
+}
+
+export async function getServerSideProps({ req }) {
+  const { token } = parseCookies(req)
+
+  return {
+    props: {
+      token,
+    },
+  }
 }
