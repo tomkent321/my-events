@@ -1,24 +1,33 @@
 .event {
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px #ddd solid;
-    background-color: #f4f4f4;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  }
-  
-  .event h4 {
-    margin-bottom: 10px;
-    flex: 2;
-  }
-  
-  .edit,
-  .delete {
-    margin: 10px;
-  }
-  
-  .delete {
-    color: red;
-  }
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px #ddd solid;
+  background-color: #f4f4f4;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  /* position: relative; */
+}
+
+.event h4 {
+  font-weight: normal;
+  /* margin-bottom: 10px; */
+  flex: 2;
+}
+
+.edit,
+.delete {
+  margin: 10px;
+}
+
+.delete {
+  color: red;
+}
+
+.img {
+  flex: 1;
+  margin: 10px;
+}
+
+/* style={{justifyContent: 'center'}}  */

@@ -52,7 +52,6 @@ export default function AddEventPage({ token }) {
       venue: e.target.venue.value,
     }
     const toastDelay = 3000
-    const allReq = true
 
     if (values.name === null || values.name === '') {
       toast.error('Please enter a Name', {

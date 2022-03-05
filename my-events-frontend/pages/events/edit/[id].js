@@ -47,13 +47,50 @@ export default function EditEventPage({ evt, token }) {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const hasEmptyFields = Object.values(values).some(
-      (element) => element === ''
-    )
+    // const hasEmptyFields = Object.values(values).some(
+    //   (element) => element === ''
+    // )
+    const toastDelay = 3000
 
-    if (hasEmptyFields) {
-      toast.error('Please be sure all required (*) fields are filled in', {
-        autoClose: 4000,
+    if (values.name === null || values.name === '') {
+      toast.error('Please enter a Name', {
+        autoClose: toastDelay,
+      })
+    } else if (values.date === null || values.date === '') {
+      toast.error('Please enter a DATE', {
+        autoClose: toastDelay,
+      })
+    } else if (values.time === null || values.time === '') {
+      toast.error('Please enter a TIME', {
+        autoClose: toastDelay,
+      })
+    } else if (values.rsvp === null || values.rsvp === '') {
+      toast.error('Please enter an RSVP DATE', {
+        autoClose: toastDelay,
+      })
+    } else if (values.rsvp > values.date) {
+      toast.error('RSVP date must not be later than event date', {
+        autoClose: toastDelay,
+      })
+    } else if (values.venue === null || values.venue === '') {
+      toast.error('Please enter a VENUE NAME', {
+        autoClose: toastDelay,
+      })
+    } else if (values.address === null || values.address === '') {
+      toast.error('Please enter a VENUE ADDRESS', {
+        autoClose: toastDelay,
+      })
+    } else if (values.totalTime === null || values.totalTime === '') {
+      toast.error('Please enter a DURATION ESTIMATE', {
+        autoClose: toastDelay,
+      })
+    } else if (values.originator === null || values.originator === '') {
+      toast.error('Please enter the INVITER NAME', {
+        autoClose: toastDelay,
+      })
+    } else if (values.information === null || values.information === '') {
+      toast.error('Please enter INFORMATION', {
+        autoClose: toastDelay,
       })
     } else {
       const res = await fetch(`${API_URL}/events/${evt.id}`, {
@@ -289,7 +326,11 @@ export default function EditEventPage({ evt, token }) {
       </div>
 
       <Modal show={showModal} onClose={() => setShowModal(false)}>
-        <ImageUpload evtId={evt.id} imageUploaded={imageUploaded} />
+        <ImageUpload
+          evtId={evt.id}
+          imageUploaded={imageUploaded}
+          token={token}
+        />
       </Modal>
     </Layout>
   )

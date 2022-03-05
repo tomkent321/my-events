@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import Image from 'next/image'
 import Layout from '@/components/Layout'
+import EventMap from '@/components/EventMap'
 import Link from 'next/link'
 import Router from 'next/router'
 import styles from '@/styles/Event.module.css'
@@ -73,7 +74,7 @@ export default function EventPage({ evt }) {
   return (
     <Layout>
       <div className={styles.event}>
-        <div className={styles.controls}>
+        {/* <div className={styles.controls}>
           <Link href={`/events/edit/${evt.id}`}>
             <a>
               <FaPencilAlt /> Edit Event
@@ -82,7 +83,7 @@ export default function EventPage({ evt }) {
           <a href='#' className={styles.delete} onClick={deleteEvent}>
             <FaTimes /> Delete Event
           </a>
-        </div>
+        </div> */}
 
         <h1>{evt.name}</h1>
         <ToastContainer />
@@ -188,8 +189,9 @@ export default function EventPage({ evt }) {
 
           <h3>{evt.venue}</h3>
           <div style={{ marginLeft: 20 }}>
-            <p>{evt.address}</p>
             <p>{evt.phone}</p>
+            <p>{evt.address}</p>
+            <EventMap evt={evt}/>
           </div>
 
           <div
