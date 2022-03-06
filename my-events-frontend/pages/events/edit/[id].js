@@ -142,6 +142,7 @@ export default function EditEventPage({ evt, token }) {
         fields with (*) are required
       </h6>
       <ToastContainer />
+
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.grid}>
           <div>

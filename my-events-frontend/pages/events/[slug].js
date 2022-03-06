@@ -74,17 +74,6 @@ export default function EventPage({ evt }) {
   return (
     <Layout>
       <div className={styles.event}>
-        {/* <div className={styles.controls}>
-          <Link href={`/events/edit/${evt.id}`}>
-            <a>
-              <FaPencilAlt /> Edit Event
-            </a>
-          </Link>
-          <a href='#' className={styles.delete} onClick={deleteEvent}>
-            <FaTimes /> Delete Event
-          </a>
-        </div> */}
-
         <h1>{evt.name}</h1>
         <ToastContainer />
         <div>
@@ -191,43 +180,27 @@ export default function EventPage({ evt }) {
           <div style={{ marginLeft: 20 }}>
             <p>{evt.phone}</p>
             <p>{evt.address}</p>
-            <EventMap evt={evt}/>
           </div>
-
-          <div
-            style={{
-              marginTop: 70,
-              width: '75%',
-              // marginLeft: 'auto',
-              marginRight: 'auto',
-            }}
-          >
-            {/* <hr></hr> */}
-          </div>
+        </div>
+        <div>
+          Map goes here
+          <EventMap evt={evt} />
         </div>
         <div className={styles.boxed}>
-          <div>
-            <p>
-              <span style={{ fontWeight: 'bold' }}>You're invited by: </span>
-              {evt.originator}
-            </p>
-          </div>
-          <div>
-            <p>
-              <span style={{ fontWeight: 'bold' }}>Travel arraingements: </span>
-              {evt.travel}
-            </p>
-          </div>
+          <p>
+            <span style={{ fontWeight: 'bold' }}>You're invited by: </span>
+            {evt.originator}
+          </p>
+          <p>
+            <span style={{ fontWeight: 'bold' }}>Travel arraingements: </span>
+            {evt.travel}
+          </p>
 
           <div>
-            <p>
-              <span style={{ fontWeight: 'bold' }}>Currently Signed Up:</span>{' '}
-              <div style={{ columns: '50px 3' }}>{(() => goingNames())()}</div>
-              {/* {(() => goingNames())()} */}
-            </p>
+            <span style={{ fontWeight: 'bold' }}>Currently Signed Up:</span>{' '}
+            <p style={{ columns: '50px 3' }}>{(() => goingNames())()}</p>
           </div>
         </div>
-        <div style={{ marginTop: 25 }}></div>
         <form onSubmit={handleSubmit}>
           <div>
             <label className={styles.label} htmlFor='name'>
@@ -240,7 +213,6 @@ export default function EventPage({ evt }) {
             <input type='submit' value='Sign Up!' className='btn' />
           </div>
         </form>
-
         <Link href='/events'>
           <a className={styles.back}>{'<'} Go Back</a>
         </Link>

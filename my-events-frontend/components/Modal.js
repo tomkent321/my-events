@@ -4,14 +4,13 @@ import ReactDOM from 'react-dom'
 import { FaTimes } from 'react-icons/fa'
 
 export default function Modal({ show, onClose, children, title }) {
-  
   const [isBrowser, setIsBrowser] = useState(false)
 
   useEffect(() => setIsBrowser(true))
 
   const handleClose = (e) => {
-      e.preventDefault()
-      onClose()
+    e.preventDefault()
+    onClose()
   }
 
   const modalContent = show ? (

@@ -14,15 +14,7 @@ export default function EventsPage({ events, page, total }) {
       {events.map((evt) => (
         <EventItem key={evt.id} evt={evt} />
       ))}
-      {/* {page > 1 && (
-        <Link href={`/events?page=${page - 1}`}>
-          <a className='btn-secondary'>Prev</a>
-        </Link>
-      )}
-      {page < lastPage && (
-        <Link href={`/events?page=${page + 1}`}>
-        </Link>
-      )} */}
+
       <Pagination page={page} total={total} />
     </Layout>
   )
