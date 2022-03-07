@@ -11,9 +11,6 @@ import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 
 export default function DashboardPage({ events, token }) {
-  //   const deleteEvent = (id) => {
-  //     console.log(id)
-  //   }
   const router = useRouter()
 
   const deleteEvent = async (id) => {
@@ -62,7 +59,6 @@ export async function getServerSideProps({ req }) {
     },
   })
   const events = await res.json()
-  console.log(events)
   return {
     props: {
       events,

@@ -11,9 +11,9 @@ export default function EventMap({ evt }) {
   const [viewport, setViewport] = useState({
     latitude: 40.712772,
     longitude: -73.935242,
-    width: '100%',
-    height: '500px',
-    zoom: 12,
+    width: '500px',
+    height: '250px',
+    zoom: 5,
   })
 
   useEffect(() => {
@@ -40,12 +40,13 @@ export default function EventMap({ evt }) {
     <ReactMapGl
       {...viewport}
       mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
-      // MapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
+      // mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
       onViewportChange={(viewport) => setViewport(viewport)}
     >
       <Marker key={evt.id} latitude={lat} longitude={lng}>
         <Image src='/images/pin.svg' width={30} height={30} />
       </Marker>
+      This would be a map
     </ReactMapGl>
   )
 }

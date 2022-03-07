@@ -7,7 +7,6 @@ import styles from '@/styles/EventItem.module.css'
 // see the file to see the required addition
 
 export default function EventItem({ evt }) {
-  console.log(evt)
   return (
     <div className={styles.event}>
       <div className={styles.img}>

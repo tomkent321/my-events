@@ -5,8 +5,6 @@ import Pagination from '@/components/Pagination'
 
 // the events come from data on the server returned by getServerSideProps
 export default function EventsPage({ events, page, total }) {
-  // console.log('page: ',page)
-  const lastPage = Math.ceil(total / PER_PAGE)
   return (
     <Layout>
       <h1>You're Invited!</h1>
@@ -23,7 +21,6 @@ export default function EventsPage({ events, page, total }) {
 // render only on the inital open, with 1 sec revalidation
 
 export async function getServerSideProps({ query: { page = 1 } }) {
-  // console.log('page: ', page)
   // Calculate start page
   const start = +page === 1 ? 0 : (+page - 1) * PER_PAGE
 
@@ -31,7 +28,6 @@ export async function getServerSideProps({ query: { page = 1 } }) {
   const totalRes = await fetch(`${API_URL}/events/count`)
   const total = await totalRes.json()
 
-  // console.log('total: ', total)
   // Fetch the events
 
   const eventRes = await fetch(
@@ -39,17 +35,6 @@ export async function getServerSideProps({ query: { page = 1 } }) {
   )
   const events = await eventRes.json()
 
-  // console.log('events: ', events)
-  // //the date sort on the strapi api never worked!
-  // events.sort(({ date: a }, { date: b }) => {
-  //   if (a > b) {
-  //     return 1
-  //   } else if (a < b) {
-  //     return -1
-  //   } else {
-  //     return 0
-  //   }
-  // })
   return {
     props: { events, page: +page, total },
   }

@@ -7,7 +7,8 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import Image from 'next/image'
 import Layout from '@/components/Layout'
-import EventMap from '@/components/EventMap'
+// import EventMap from '@/components/EventMap'
+// import Mapped from '@/components/EventMap2'
 import Link from 'next/link'
 import Router from 'next/router'
 import styles from '@/styles/Event.module.css'
@@ -183,8 +184,8 @@ export default function EventPage({ evt }) {
           </div>
         </div>
         <div>
-          Map goes here
-          <EventMap evt={evt} />
+          {/* <EventMap evt={evt} /> */}
+          {/* <Mapped /> */}
         </div>
         <div className={styles.boxed}>
           <p>
