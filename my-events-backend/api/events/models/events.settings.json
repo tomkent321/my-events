@@ -73,9 +73,6 @@
       "model": "user",
       "via": "events"
     },
-    "committed": {
-      "type": "string"
-    },
     "Going": {
       "collection": "attendee",
       "via": "event"
